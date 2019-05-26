@@ -1,0 +1,19 @@
+FROM centos:6.9
+RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.cloud.tencent.com/repo/centos6_base.repo  && \
+         curl -o /etc/yum.repos.d/epel.repo http://mirrors.cloud.tencent.com/repo/epel-6.repo   && \
+         yum install -y nginx php-fpm unzip php-mysql mysql-server   && \
+         mkdir /code      && \
+         rm -f /etc/nginx/conf.d/*    && \
+         sed  -ri   's#user = .*#user = nginx#g'  /etc/php-fpm.d/www.conf     && \
+         sed  -ri   's#group = .*#group = nginx#g'  /etc/php-fpm.d/www.conf
+ADD  php.conf /etc/nginx/conf.d/
+ADD  php.sh    /php.sh
+WORKDIR /code
+ADD  phpwind.zip .
+RUN  unzip /code/phpwind.zip -d /code  && \
+          mv /code/upload/*  /code      && \
+          chown -R nginx. /code     && \
+          chmod -R 777 /code       && \
+          service mysqld start && \
+          mysqladmin -uroot password '123456'
+CMD ["/bin/bash","/php.sh"]
