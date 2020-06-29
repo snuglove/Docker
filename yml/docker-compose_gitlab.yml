@@ -1,0 +1,16 @@
+#gitlab默认账号为root,密码在第一次登陆网页时会提示你填写
+version: '2.3'
+services:
+  log:
+    image: gitlab/gitlab-ce
+    container_name: gitlab-ce
+    restart: always
+    dns_search: .
+    volumes:
+      - /var/gitlab/gitlab:/etc/gitlab
+      - /var/gitlab/log:/var/log/gitlab
+      - /var/gitlab/opt:/var/opt/gitlab
+    ports:
+      - "8099:80"
+      - "2233:22"
+      - "4443:443"
