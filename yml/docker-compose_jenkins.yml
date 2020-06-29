@@ -1,3 +1,4 @@
+#挂载目录需要提前创建并赋予权限
 version: '2.3'
 services:
   log:
