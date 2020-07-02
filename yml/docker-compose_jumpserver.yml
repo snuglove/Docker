@@ -3,14 +3,13 @@ version: '2.3'
 services:
   log:
     image: jumpserver/jms_all:latest
-    container_name: jumps_all
+    container_name: jms_all
     restart: always
     dns_search: .
     environment:
       - SECRET_KEY=$SECRET_KEY
       - BOOTSTRAP_TOKEN=$BOOTSTRAP_TOKEN
-    volumes:
-      - /data:/data 
     ports:
       - "8999:80"
       - "2222:2222" #ssh端口
+#数据内置版,删除容器会导致容器丢失
