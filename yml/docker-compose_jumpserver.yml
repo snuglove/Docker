@@ -1,0 +1,16 @@
+#先执行Random_key_generation.sh生成秘钥,jumpserver默认用户和密码是admin
+version: '2.3'
+services:
+  log:
+    image: jumpserver/jms_all:latest
+    container_name: jumps_all
+    restart: always
+    dns_search: .
+    environment:
+      - SECRET_KEY=$SECRET_KEY
+      - BOOTSTRAP_TOKEN=$BOOTSTRAP_TOKEN
+    volumes:
+      - /data:/data 
+    ports:
+      - "8999:80"
+      - "2222:2222" #ssh端口
